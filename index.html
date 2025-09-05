@@ -83,13 +83,17 @@
         import { getFirestore, doc, onSnapshot, setDoc, setLogLevel, collection, getDocs, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
         // Firebase-related variables
-        // REEMPLAZA "TU_PROYECTO_ID" CON EL ID DE TU PROYECTO DE FIREBASE
-        const FIREBASE_PROJECT_ID = "bard-frontend"; 
-        const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
+        // REEMPLAZA TODO ESTE OBJETO firebaseConfig CON EL QUE OBTENGAS DE TU CONSOLA DE FIREBASE
         const firebaseConfig = {
-            ...JSON.parse(typeof __firebase_config !== 'undefined' ? __firebase_config : '{}'),
-            projectId: 1093381668139
+            apiKey: "AIzaSyBedqmWAkcFFwpGbPAZ9WXS7wtlYzfgvVA",
+            authDomain: "autoevaluacion5s.firebaseapp.com",
+            projectId: "autoevaluacion5s",
+            storageBucket: "autoevaluacion5s.firebasestorage.app",
+            messagingSenderId: "1093381668139",
+            appId: "1:1093381668139:web:f09f2c96e65e4e2164d96e",
+            measurementId: "G-6Y2EEKT3L5"
         };
+        const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
         const initialAuthToken = typeof __initial_auth_token !== 'undefined' ? __initial_auth_token : null;
 
         setLogLevel('debug');
@@ -374,7 +378,7 @@
                     </div>
                 `;
                 questionBlock.appendChild(observationContainer);
-                questionsContainer.appendChild(questionBlock);
+                questionsContainer.appendChild(observationContainer);
             });
             
             // Re-attach event listeners to dynamically created elements
