@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Autoevaluación 5S</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f3f4f6;
+        }
+        .observation-container.hidden {
+            display: none;
+        }
+        .photo-preview img {
+            max-width: 100px;
+            max-height: 100px;
+            border-radius: 8px;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 flex items-center justify-center min-h-screen p-4">
+
+    <div class="container bg-white rounded-xl shadow-lg p-6 md:p-10 w-full max-w-2xl flex flex-col items-center">
+        <h1 class="text-3xl md:text-4xl font-bold text-gray-800 mb-6 text-center">AUTOEVALUACIÓN 5S</h1>
+        
+        <!-- Paginador e Indicador de Puntaje -->
+        <div class="w-full flex justify-between items-center mb-6">
+            <div class="flex items-center space-x-2">
+                <span id="pageNumber" class="text-lg font-bold text-blue-600">Página 1</span>
+                <span class="text-gray-500">de 5</span>
+            </div>
+            <div class="flex items-center space-x-2">
+                <span class="text-lg font-bold text-gray-800">Puntaje Página:</span>
+                <span id="pageScore" class="text-2xl font-bold text-blue-600">0</span>
+            </div>
+        </div>
+
+        <!-- Preguntas de la Página 1 -->
+        <div id="page1" class="page w-full space-y-8">
+            <h2 class="text-2xl font-semibold text-gray-700">1°S - Classificación | Seiri | Separar lo útil de lo inútil y descartar lo que no se utilice más.</h2>
+            
+            <div class="question-block bg-gray-50 rounded-lg p-4 shadow-sm border border-gray-200" data-question-id="q1_1">
+                <p class="font-medium text-gray-800 mb-2">1.1 No hay equipo, archivo físico, mueble o utensilio sin uso en el área.</p>
+                <div class="flex flex-wrap gap-2 mb-4">
+                    <label class="radio-label">
+                        <input type="radio" name="q1_1" value="CUMPLE" class="peer hidden">
+                        <span class="inline-flex items-center justify-center px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-full cursor-pointer hover:bg-gray-100 peer-checked:bg-blue-600 peer-checked:text-white peer-checked:border-transparent transition-colors duration-200">CUMPLE</span>
+                    </label>
+                    <label class="radio-label">
+                        <input type="radio" name="q1_1" value="CUMPLE PARCIAL" class="peer hidden">
+                        <span class="inline-flex items-center justify-center px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-full cursor-pointer hover:bg-gray-100 peer-checked:bg-blue-600 peer-checked:text-white peer-checked:border-transparent transition-colors duration-200">CUMPLE PARCIAL</span>
+                    </label>
+                    <label class="radio-label">
+                        <input type="radio" name="q1_1" value="NO CUMPLE" class="peer hidden">
+                        <span class="inline-flex items-center justify-center px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-full cursor-pointer hover:bg-gray-100 peer-checked:bg-blue-600 peer-checked:text-white peer-checked:border-transparent transition-colors duration-200">NO CUMPLE</span>
+                    </label>
+                    <label class="radio-label">
+                        <input type="radio" name="q1_1" value="NO APLICA" class="peer hidden">
+                        <span class="inline-flex items-center justify-center px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-full cursor-pointer hover:bg-gray-100 peer-checked:bg-blue-600 peer-checked:text-white peer-checked:border-transparent transition-colors duration-200">NO APLICA</span>
+                    </label>
+                </div>
+                <div class="observation-container hidden mt-4 space-y-2">
+                    <label class="block text-sm font-medium text-gray-700">Observaciones</label>
+                    <textarea class="observations-textarea w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"></textarea>
+                    <button class="upload-btn w-full py-2 px-4 rounded-lg text-sm font-medium text-white bg-green-600 hover:bg-green-700 transition-colors duration-200">Cargar Foto</button>
+                    <input type="file" accept="image/*" class="photo-upload hidden">
+                    <div class="photo-preview mt-2"></div>
+                </div>
+            </div>
+            
+            <div class="question-block bg-gray-50 rounded-lg p-4 shadow-sm border border-gray-200" data-question-id="q1_2">
+                <p class="font-medium text-gray-800 mb-2">1.2 Los materiales y equipos de uso frecuente están disponibles y son de fácil acceso.</p>
+                <div class="flex flex-wrap gap-2 mb-4">
+                    <label class="radio-label">
+                        <input type="radio" name="q1_2" value="CUMPLE" class="peer hidden">
+                        <span class="inline-flex items-center justify-center px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-full cursor-pointer hover:bg-gray-100 peer-checked:bg-blue-600 peer-checked:text-white peer-checked:border-transparent transition-colors duration-200">CUMPLE</span>
+                    </label>
+                    <label class="radio-label">
+                        <input type="radio" name="q1_2" value="CUMPLE PARCIAL" class="peer hidden">
+                        <span class="inline-flex items-center justify-center px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-full cursor-pointer hover:bg-gray-100 peer-checked:bg-blue-600 peer-checked:text-white peer-checked:border-transparent transition-colors duration-200">CUMPLE PARCIAL</span>
+                    </label>
+                    <label class="radio-label">
+                        <input type="radio" name="q1_2" value="NO CUMPLE" class="peer hidden">
+                        <span class="inline-flex items-center justify-center px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-full cursor-pointer hover:bg-gray-100 peer-checked:bg-blue-600 peer-checked:text-white peer-checked:border-transparent transition-colors duration-200">NO CUMPLE</span>
+                    </label>
+                    <label class="radio-label">
+                        <input type="radio" name="q1_2" value="NO APLICA" class="peer hidden">
+                        <span class="inline-flex items-center justify-center px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-full cursor-pointer hover:bg-gray-100 peer-checked:bg-blue-600 peer-checked:text-white peer-checked:border-transparent transition-colors duration-200">NO APLICA</span>
+                    </label>
+                </div>
+                <div class="observation-container hidden mt-4 space-y-2">
+                    <label class="block text-sm font-medium text-gray-700">Observaciones</label>
+                    <textarea class="observations-textarea w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"></textarea>
+                    <button class="upload-btn w-full py-2 px-4 rounded-lg text-sm font-medium text-white bg-green-600 hover:bg-green-700 transition-colors duration-200">Cargar Foto</button>
+                    <input type="file" accept="image/*" class="photo-upload hidden">
+                    <div class="photo-preview mt-2"></div>
+                </div>
+            </div>
+            
+            <div class="question-block bg-gray-50 rounded-lg p-4 shadow-sm border border-gray-200" data-question-id="q1_3">
+                <p class="font-medium text-gray-800 mb-2">1.3 El suelo está libre de objetos que deberían estar guardados.</p>
+                <div class="flex flex-wrap gap-2 mb-4">
+                    <label class="radio-label">
+                        <input type="radio" name="q1_3" value="CUMPLE" class="peer hidden">
+                        <span class="inline-flex items-center justify-center px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-full cursor-pointer hover:bg-gray-100 peer-checked:bg-blue-600 peer-checked:text-white peer-checked:border-transparent transition-colors duration-200">CUMPLE</span>
+                    </label>
+                    <label class="radio-label">
+                        <input type="radio" name="q1_3" value="CUMPLE PARCIAL" class="peer hidden">
+                        <span class="inline-flex items-center justify-center px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-full cursor-pointer hover:bg-gray-100 peer-checked:bg-blue-600 peer-checked:text-white peer-checked:border-transparent transition-colors duration-200">CUMPLE PARCIAL</span>
+                    </label>
+                    <label class="radio-label">
+                        <input type="radio" name="q1_3" value="NO CUMPLE" class="peer hidden">
+                        <span class="inline-flex items-center justify-center px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-full cursor-pointer hover:bg-gray-100 peer-checked:bg-blue-600 peer-checked:text-white peer-checked:border-transparent transition-colors duration-200">NO CUMPLE</span>
+                    </label>
+                    <label class="radio-label">
+                        <input type="radio" name="q1_3" value="NO APLICA" class="peer hidden">
+                        <span class="inline-flex items-center justify-center px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-full cursor-pointer hover:bg-gray-100 peer-checked:bg-blue-600 peer-checked:text-white peer-checked:border-transparent transition-colors duration-200">NO APLICA</span>
+                    </label>
+                </div>
+                <div class="observation-container hidden mt-4 space-y-2">
+                    <label class="block text-sm font-medium text-gray-700">Observaciones</label>
+                    <textarea class="observations-textarea w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"></textarea>
+                    <button class="upload-btn w-full py-2 px-4 rounded-lg text-sm font-medium text-white bg-green-600 hover:bg-green-700 transition-colors duration-200">Cargar Foto</button>
+                    <input type="file" accept="image/*" class="photo-upload hidden">
+                    <div class="photo-preview mt-2"></div>
+                </div>
+            </div>
+            
+            <div class="question-block bg-gray-50 rounded-lg p-4 shadow-sm border border-gray-200" data-question-id="q1_4">
+                <p class="font-medium text-gray-800 mb-2">1.4 Las partes superiores e internas de todos los armarios, estantes, mesas, etc., están libres de objetos no deseados.</p>
+                <div class="flex flex-wrap gap-2 mb-4">
+                    <label class="radio-label">
+                        <input type="radio" name="q1_4" value="CUMPLE" class="peer hidden">
+                        <span class="inline-flex items-center justify-center px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-full cursor-pointer hover:bg-gray-100 peer-checked:bg-blue-600 peer-checked:text-white peer-checked:border-transparent transition-colors duration-200">CUMPLE</span>
+                    </label>
+                    <label class="radio-label">
+                        <input type="radio" name="q1_4" value="CUMPLE PARCIAL" class="peer hidden">
+                        <span class="inline-flex items-center justify-center px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-full cursor-pointer hover:bg-gray-100 peer-checked:bg-blue-600 peer-checked:text-white peer-checked:border-transparent transition-colors duration-200">CUMPLE PARCIAL</span>
+                    </label>
+                    <label class="radio-label">
+                        <input type="radio" name="q1_4" value="NO CUMPLE" class="peer hidden">
+                        <span class="inline-flex items-center justify-center px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-full cursor-pointer hover:bg-gray-100 peer-checked:bg-blue-600 peer-checked:text-white peer-checked:border-transparent transition-colors duration-200">NO CUMPLE</span>
+                    </label>
+                    <label class="radio-label">
+                        <input type="radio" name="q1_4" value="NO APLICA" class="peer hidden">
+                        <span class="inline-flex items-center justify-center px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-full cursor-pointer hover:bg-gray-100 peer-checked:bg-blue-600 peer-checked:text-white peer-checked:border-transparent transition-colors duration-200">NO APLICA</span>
+                    </label>
+                </div>
+                <div class="observation-container hidden mt-4 space-y-2">
+                    <label class="block text-sm font-medium text-gray-700">Observaciones</label>
+                    <textarea class="observations-textarea w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"></textarea>
+                    <button class="upload-btn w-full py-2 px-4 rounded-lg text-sm font-medium text-white bg-green-600 hover:bg-green-700 transition-colors duration-200">Cargar Foto</button>
+                    <input type="file" accept="image/*" class="photo-upload hidden">
+                    <div class="photo-preview mt-2"></div>
+                </div>
+            </div>
+            
+            <div class="question-block bg-gray-50 rounded-lg p-4 shadow-sm border border-gray-200" data-question-id="q1_5">
+                <p class="font-medium text-gray-800 mb-2">1.5 Hay una apariencia general libre de desorden en el área.</p>
+                <div class="flex flex-wrap gap-2 mb-4">
+                    <label class="radio-label">
+                        <input type="radio" name="q1_5" value="CUMPLE" class="peer hidden">
+                        <span class="inline-flex items-center justify-center px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-full cursor-pointer hover:bg-gray-100 peer-checked:bg-blue-600 peer-checked:text-white peer-checked:border-transparent transition-colors duration-200">CUMPLE</span>
+                    </label>
+                    <label class="radio-label">
+                        <input type="radio" name="q1_5" value="CUMPLE PARCIAL" class="peer hidden">
+                        <span class="inline-flex items-center justify-center px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-full cursor-pointer hover:bg-gray-100 peer-checked:bg-blue-600 peer-checked:text-white peer-checked:border-transparent transition-colors duration-200">CUMPLE PARCIAL</span>
+                    </label>
+                    <label class="radio-label">
+                        <input type="radio" name="q1_5" value="NO CUMPLE" class="peer hidden">
+                        <span class="inline-flex items-center justify-center px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-full cursor-pointer hover:bg-gray-100 peer-checked:bg-blue-600 peer-checked:text-white peer-checked:border-transparent transition-colors duration-200">NO CUMPLE</span>
+                    </label>
+                    <label class="radio-label">
+                        <input type="radio" name="q1_5" value="NO APLICA" class="peer hidden">
+                        <span class="inline-flex items-center justify-center px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-full cursor-pointer hover:bg-gray-100 peer-checked:bg-blue-600 peer-checked:text-white peer-checked:border-transparent transition-colors duration-200">NO APLICA</span>
+                    </label>
+                </div>
+                <div class="observation-container hidden mt-4 space-y-2">
+                    <label class="block text-sm font-medium text-gray-700">Observaciones</label>
+                    <textarea class="observations-textarea w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"></textarea>
+                    <button class="upload-btn w-full py-2 px-4 rounded-lg text-sm font-medium text-white bg-green-600 hover:bg-green-700 transition-colors duration-200">Cargar Foto</button>
+                    <input type="file" accept="image/*" class="photo-upload hidden">
+                    <div class="photo-preview mt-2"></div>
+                </div>
+            </div>
+            
+        </div>
+        
+        <!-- Controles de Navegación -->
+        <div class="flex justify-between w-full mt-8">
+            <button id="prevPageBtn" class="px-6 py-2 rounded-lg text-lg font-medium text-gray-700 bg-gray-200 hover:bg-gray-300 transition-colors duration-200" disabled>Anterior</button>
+            <button id="nextPageBtn" class="px-6 py-2 rounded-lg text-lg font-medium text-white bg-blue-600 hover:bg-blue-700 transition-colors duration-200">Siguiente</button>
+            <button id="finishBtn" class="hidden px-6 py-2 rounded-lg text-lg font-medium text-white bg-green-600 hover:bg-green-700 transition-colors duration-200">Ver Resultado</button>
+        </div>
+
+        <!-- Modal de Mensaje -->
+        <div id="messageModal" class="fixed inset-0 bg-gray-900 bg-opacity-75 flex items-center justify-center hidden z-50">
+            <div class="bg-white rounded-xl shadow-2xl p-6 md:p-8 max-w-sm w-full text-center">
+                <h3 id="modalTitle" class="text-xl font-bold mb-4"></h3>
+                <p id="modalMessage" class="text-gray-700 mb-6"></p>
+                <button id="closeModalBtn" class="w-full py-2 px-4 rounded-lg text-lg font-medium text-white bg-blue-600 hover:bg-blue-700 transition duration-200">Cerrar</button>
+            </div>
+        </div>
+
+    </div>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+        import { getAuth, signInWithCustomToken, signInAnonymously } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        import { getFirestore, doc, onSnapshot, setDoc, setLogLevel } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+
+        // Firebase-related variables
+        const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
+        const firebaseConfig = JSON.parse(typeof __firebase_config !== 'undefined' ? __firebase_config : '{}');
+        const initialAuthToken = typeof __initial_auth_token !== 'undefined' ? __initial_auth_token : null;
+
+        setLogLevel('debug');
+
+        let db;
+        let auth;
+        let userId = null;
+
+        // UI elements
+        const pageNumberDisplay = document.getElementById('pageNumber');
+        const pageScoreDisplay = document.getElementById('pageScore');
+        const nextPageBtn = document.getElementById('nextPageBtn');
+        const prevPageBtn = document.getElementById('prevPageBtn');
+        const finishBtn = document.getElementById('finishBtn');
+        const messageModal = document.getElementById('messageModal');
+        const modalTitle = document.getElementById('modalTitle');
+        const modalMessage = document.getElementById('modalMessage');
+        const closeModalBtn = document.getElementById('closeModalBtn');
+        const pages = document.querySelectorAll('.page');
+        let currentPage = 0;
+
+        // Data structure to hold responses
+        let responses = {};
+
+        // Mapping from question names to scores
+        const scoreMapping = {
+            'CUMPLE': 20,
+            'CUMPLE PARCIAL': 10,
+            'NO CUMPLE': 0,
+            'NO APLICA': 10
+        };
+
+        // Initialize Firebase and Authentication
+        const initializeFirebase = async () => {
+            try {
+                const app = initializeApp(firebaseConfig);
+                db = getFirestore(app);
+                auth = getAuth(app);
+
+                if (initialAuthToken) {
+                    await signInWithCustomToken(auth, initialAuthToken);
+                } else {
+                    await signInAnonymously(auth);
+                }
+
+                userId = auth.currentUser.uid;
+                // Initial fetch of data and setup of listeners
+                setupRealtimeListener();
+
+            } catch (error) {
+                console.error("Error al inicializar Firebase o al autenticar:", error);
+                showMessageModal('Error', `Error al inicializar la aplicación. Por favor, recargue la página. Detalles: ${error.message}`);
+            }
+        };
+
+        // Setup real-time listener for responses
+        const setupRealtimeListener = () => {
+            const userDocRef = doc(db, `artifacts/${appId}/users/${userId}/evaluation/responses`);
+            onSnapshot(userDocRef, (docSnap) => {
+                if (docSnap.exists()) {
+                    responses = docSnap.data().responses || {};
+                } else {
+                    responses = {};
+                }
+                updateUI();
+            }, (error) => {
+                console.error("Error al escuchar los datos:", error);
+                showMessageModal('Error', 'Error al cargar los datos de la autoevaluación en tiempo real.');
+            });
+        };
+
+        // Function to save responses to Firestore
+        const saveResponses = async () => {
+            if (!userId) return;
+            const userDocRef = doc(db, `artifacts/${appId}/users/${userId}/evaluation/responses`);
+            try {
+                await setDoc(userDocRef, { responses }, { merge: true });
+            } catch (error) {
+                console.error("Error al guardar las respuestas:", error);
+                showMessageModal('Error', `No se pudieron guardar las respuestas. Detalles: ${error.message}`);
+            }
+        };
+
+        // Function to update the UI based on the current state
+        const updateUI = () => {
+            // Hide all pages
+            pages.forEach((page, index) => {
+                page.style.display = index === currentPage ? 'block' : 'none';
+            });
+            
+            // Update page number display
+            pageNumberDisplay.textContent = `Página ${currentPage + 1}`;
+            
+            // Update navigation buttons
+            prevPageBtn.disabled = currentPage === 0;
+            nextPageBtn.style.display = currentPage < pages.length - 1 ? 'block' : 'none';
+            finishBtn.style.display = currentPage === pages.length - 1 ? 'block' : 'none';
+            
+            // Update question selection and calculate page score
+            let pageScore = 0;
+            const questionBlocks = pages[currentPage].querySelectorAll('.question-block');
+            
+            questionBlocks.forEach(block => {
+                const questionId = block.dataset.questionId;
+                const savedResponse = responses[questionId];
+                const radioInputs = block.querySelectorAll('input[type="radio"]');
+                const observationContainer = block.querySelector('.observation-container');
+                const observationsTextarea = block.querySelector('.observations-textarea');
+                const photoPreview = block.querySelector('.photo-preview');
+
+                // Restore radio button selection
+                radioInputs.forEach(input => {
+                    input.checked = (savedResponse && input.value === savedResponse.answer);
+                });
+                
+                // Restore observations and photos
+                if (savedResponse && (savedResponse.answer === 'NO CUMPLE' || savedResponse.answer === 'CUMPLE PARCIAL' || savedResponse.answer === 'NO APLICA')) {
+                    observationContainer.classList.remove('hidden');
+                    observationsTextarea.value = savedResponse.observations || '';
+                    if (savedResponse.photoUrl) {
+                        photoPreview.innerHTML = `<img src="${savedResponse.photoUrl}" alt="Foto de la auditoría" class="w-24 h-24 object-cover">`;
+                    } else {
+                        photoPreview.innerHTML = '';
+                    }
+                } else {
+                    observationContainer.classList.add('hidden');
+                    observationsTextarea.value = '';
+                    photoPreview.innerHTML = '';
+                }
+
+                // Calculate page score
+                const selectedRadio = Array.from(radioInputs).find(input => input.checked);
+                if (selectedRadio) {
+                    const score = scoreMapping[selectedRadio.value] || 0;
+                    pageScore += score;
+                }
+            });
+            pageScoreDisplay.textContent = pageScore;
+        };
+
+        // Handle navigation
+        nextPageBtn.addEventListener('click', () => {
+            if (currentPage < pages.length - 1) {
+                currentPage++;
+                updateUI();
+                saveResponses();
+            }
+        });
+
+        prevPageBtn.addEventListener('click', () => {
+            if (currentPage > 0) {
+                currentPage--;
+                updateUI();
+                saveResponses();
+            }
+        });
+
+        // Handle radio button changes
+        document.querySelectorAll('input[type="radio"]').forEach(radio => {
+            radio.addEventListener('change', (event) => {
+                const questionBlock = event.target.closest('.question-block');
+                const questionId = questionBlock.dataset.questionId;
+                const value = event.target.value;
+                const observationsTextarea = questionBlock.querySelector('.observations-textarea');
+                const observationContainer = questionBlock.querySelector('.observation-container');
+                const photoInput = questionBlock.querySelector('.photo-upload');
+
+                // Show/hide observation container
+                if (value === 'NO CUMPLE' || value === 'CUMPLE PARCIAL') {
+                    observationContainer.classList.remove('hidden');
+                } else {
+                    observationContainer.classList.add('hidden');
+                }
+
+                // Store response
+                if (!responses[questionId]) {
+                    responses[questionId] = {};
+                }
+                responses[questionId].answer = value;
+
+                // Clear observations and photos if not applicable
+                if (value === 'CUMPLE' || value === 'NO APLICA') {
+                    delete responses[questionId].observations;
+                    delete responses[questionId].photoUrl;
+                    observationsTextarea.value = '';
+                    photoInput.value = '';
+                    questionBlock.querySelector('.photo-preview').innerHTML = '';
+                }
+
+                saveResponses();
+                updateUI();
+            });
+        });
+
+        // Handle observation text changes
+        document.querySelectorAll('.observations-textarea').forEach(textarea => {
+            textarea.addEventListener('input', (event) => {
+                const questionId = event.target.closest('.question-block').dataset.questionId;
+                if (!responses[questionId]) {
+                    responses[questionId] = {};
+                }
+                responses[questionId].observations = event.target.value;
+                saveResponses();
+            });
+        });
+        
+        // Handle photo upload button click
+        document.querySelectorAll('.upload-btn').forEach(button => {
+            button.addEventListener('click', () => {
+                const questionBlock = button.closest('.question-block');
+                const photoInput = questionBlock.querySelector('.photo-upload');
+                photoInput.click();
+            });
+        });
+
+        // Handle photo file selection
+        document.querySelectorAll('.photo-upload').forEach(input => {
+            input.addEventListener('change', (event) => {
+                const questionBlock = event.target.closest('.question-block');
+                const questionId = questionBlock.dataset.questionId;
+                const file = event.target.files[0];
+                const photoPreview = questionBlock.querySelector('.photo-preview');
+
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = (e) => {
+                        const base64Image = e.target.result;
+                        photoPreview.innerHTML = `<img src="${base64Image}" alt="Foto de la auditoría" class="w-24 h-24 object-cover">`;
+                        
+                        if (!responses[questionId]) {
+                            responses[questionId] = {};
+                        }
+                        // For a real-world app, you would upload this file to Firebase Storage
+                        // and save the returned URL here instead of the base64 data.
+                        responses[questionId].photoUrl = base64Image;
+                        saveResponses();
+                    };
+                    reader.readAsDataURL(file);
+                } else {
+                    photoPreview.innerHTML = '';
+                    if (responses[questionId]) {
+                         delete responses[questionId].photoUrl;
+                         saveResponses();
+                    }
+                }
+            });
+        });
+
+        // Handle finish button
+        finishBtn.addEventListener('click', () => {
+            let totalScore = 0;
+            let totalQuestions = 0;
+            
+            // Calculate total score from all responses
+            for (const question in responses) {
+                if (responses.hasOwnProperty(question)) {
+                    const score = scoreMapping[responses[question].answer] || 0;
+                    totalScore += score;
+                    totalQuestions++;
+                }
+            }
+
+            const averageScore = totalQuestions > 0 ? (totalScore / totalQuestions).toFixed(2) : 0;
+            
+            showMessageModal('Resultado Final', `Puntuación General Promedio: ${averageScore} puntos.`);
+        });
+
+        // Modal functions
+        const showMessageModal = (title, message) => {
+            modalTitle.textContent = title;
+            modalMessage.textContent = message;
+            messageModal.classList.remove('hidden');
+        };
+
+        closeModalBtn.addEventListener('click', () => {
+            messageModal.classList.add('hidden');
+        });
+
+        // Start the application
+        window.onload = initializeFirebase;
+    </script>
+</body>
+</html>
