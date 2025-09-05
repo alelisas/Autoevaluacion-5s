@@ -19,248 +19,68 @@
             max-height: 100px;
             border-radius: 8px;
         }
+        .btn-green {
+            background-color: #10B981;
+        }
+        .btn-green:hover {
+            background-color: #059669;
+        }
     </style>
 </head>
 <body class="bg-gray-100 flex items-center justify-center min-h-screen p-4">
 
+    <!-- Modal de Mensaje -->
+    <div id="messageModal" class="fixed inset-0 bg-gray-900 bg-opacity-75 flex items-center justify-center hidden z-50">
+        <div class="bg-white rounded-xl shadow-2xl p-6 md:p-8 max-w-sm w-full text-center">
+            <h3 id="modalTitle" class="text-xl font-bold mb-4"></h3>
+            <p id="modalMessage" class="text-gray-700 mb-6"></p>
+            <button id="closeModalBtn" class="w-full py-2 px-4 rounded-lg text-lg font-medium text-white bg-blue-600 hover:bg-blue-700 transition duration-200">Cerrar</button>
+        </div>
+    </div>
+
+    <!-- Contenedor Principal -->
     <div class="container bg-white rounded-xl shadow-lg p-6 md:p-10 w-full max-w-2xl flex flex-col items-center">
         <h1 class="text-3xl md:text-4xl font-bold text-gray-800 mb-6 text-center">AUTOEVALUACIÓN 5S</h1>
         
-        <!-- Paginador e Indicador de Puntaje -->
-        <div class="w-full flex justify-between items-center mb-6">
-            <div class="flex items-center space-x-2">
-                <span id="pageNumber" class="text-lg font-bold text-blue-600">Página 1</span>
-                <span class="text-gray-500">de 5</span>
-            </div>
-            <div class="flex items-center space-x-2">
-                <span class="text-lg font-bold text-gray-800">Puntaje Página:</span>
-                <span id="pageScore" class="text-2xl font-bold text-blue-600">0</span>
-            </div>
+        <!-- Pantalla de Selección de Auditoría -->
+        <div id="auditSelectionScreen" class="w-full">
+            <h2 class="text-2xl font-semibold text-gray-700 mb-4 text-center">Selecciona un Área o crea una nueva</h2>
+            <select id="areaSelect" class="w-full p-3 rounded-lg border border-gray-300 mb-4 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                <option value="">Selecciona un área</option>
+            </select>
+            <ul id="pastAuditsList" class="w-full space-y-2 mb-6"></ul>
+            <button id="newAuditBtn" class="w-full py-3 px-6 rounded-lg text-lg font-medium text-white bg-blue-600 hover:bg-blue-700 transition-colors duration-200">Iniciar Nueva Auditoría</button>
         </div>
 
-        <!-- Preguntas de la Página 1 -->
-        <div id="page1" class="page w-full space-y-8">
-            <h2 class="text-2xl font-semibold text-gray-700">1°S - Classificación | Seiri | Separar lo útil de lo inútil y descartar lo que no se utilice más.</h2>
-            
-            <div class="question-block bg-gray-50 rounded-lg p-4 shadow-sm border border-gray-200" data-question-id="q1_1">
-                <p class="font-medium text-gray-800 mb-2">1.1 No hay equipo, archivo físico, mueble o utensilio sin uso en el área.</p>
-                <div class="flex flex-wrap gap-2 mb-4">
-                    <label class="radio-label">
-                        <input type="radio" name="q1_1" value="CUMPLE" class="peer hidden">
-                        <span class="inline-flex items-center justify-center px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-full cursor-pointer hover:bg-gray-100 peer-checked:bg-blue-600 peer-checked:text-white peer-checked:border-transparent transition-colors duration-200">CUMPLE</span>
-                    </label>
-                    <label class="radio-label">
-                        <input type="radio" name="q1_1" value="CUMPLE PARCIAL" class="peer hidden">
-                        <span class="inline-flex items-center justify-center px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-full cursor-pointer hover:bg-gray-100 peer-checked:bg-blue-600 peer-checked:text-white peer-checked:border-transparent transition-colors duration-200">CUMPLE PARCIAL</span>
-                    </label>
-                    <label class="radio-label">
-                        <input type="radio" name="q1_1" value="NO CUMPLE" class="peer hidden">
-                        <span class="inline-flex items-center justify-center px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-full cursor-pointer hover:bg-gray-100 peer-checked:bg-blue-600 peer-checked:text-white peer-checked:border-transparent transition-colors duration-200">NO CUMPLE</span>
-                    </label>
-                    <label class="radio-label">
-                        <input type="radio" name="q1_1" value="NO APLICA" class="peer hidden">
-                        <span class="inline-flex items-center justify-center px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-full cursor-pointer hover:bg-gray-100 peer-checked:bg-blue-600 peer-checked:text-white peer-checked:border-transparent transition-colors duration-200">NO APLICA</span>
-                    </label>
+        <!-- Pantalla del Formulario de Auditoría -->
+        <div id="auditFormScreen" class="hidden w-full">
+            <div class="w-full flex justify-between items-center mb-6">
+                <div class="flex items-center space-x-2">
+                    <span id="pageNumber" class="text-lg font-bold text-blue-600">Página 1</span>
+                    <span class="text-gray-500">de 5</span>
                 </div>
-                <div class="observation-container hidden mt-4 space-y-2">
-                    <label class="block text-sm font-medium text-gray-700">Observaciones</label>
-                    <textarea class="observations-textarea w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"></textarea>
-                    
-                    <div class="flex flex-col md:flex-row gap-4">
-                        <div class="flex-1">
-                            <button class="upload-btn-1 w-full py-2 px-4 rounded-lg text-sm font-medium text-white bg-green-600 hover:bg-green-700 transition-colors duration-200">Cargar Foto 1</button>
-                            <input type="file" accept="image/*" class="photo-upload-1 hidden">
-                            <div class="photo-preview-1 mt-2"></div>
-                        </div>
-                        <div class="flex-1">
-                            <button class="upload-btn-2 w-full py-2 px-4 rounded-lg text-sm font-medium text-white bg-green-600 hover:bg-green-700 transition-colors duration-200">Cargar Foto 2</button>
-                            <input type="file" accept="image/*" class="photo-upload-2 hidden">
-                            <div class="photo-preview-2 mt-2"></div>
-                        </div>
-                    </div>
+                <div class="flex items-center space-x-2">
+                    <span class="text-lg font-bold text-gray-800">Puntaje Página:</span>
+                    <span id="pageScore" class="text-2xl font-bold text-blue-600">0</span>
                 </div>
             </div>
-            
-            <div class="question-block bg-gray-50 rounded-lg p-4 shadow-sm border border-gray-200" data-question-id="q1_2">
-                <p class="font-medium text-gray-800 mb-2">1.2 Los materiales y equipos de uso frecuente están disponibles y son de fácil acceso.</p>
-                <div class="flex flex-wrap gap-2 mb-4">
-                    <label class="radio-label">
-                        <input type="radio" name="q1_2" value="CUMPLE" class="peer hidden">
-                        <span class="inline-flex items-center justify-center px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-full cursor-pointer hover:bg-gray-100 peer-checked:bg-blue-600 peer-checked:text-white peer-checked:border-transparent transition-colors duration-200">CUMPLE</span>
-                    </label>
-                    <label class="radio-label">
-                        <input type="radio" name="q1_2" value="CUMPLE PARCIAL" class="peer hidden">
-                        <span class="inline-flex items-center justify-center px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-full cursor-pointer hover:bg-gray-100 peer-checked:bg-blue-600 peer-checked:text-white peer-checked:border-transparent transition-colors duration-200">CUMPLE PARCIAL</span>
-                    </label>
-                    <label class="radio-label">
-                        <input type="radio" name="q1_2" value="NO CUMPLE" class="peer hidden">
-                        <span class="inline-flex items-center justify-center px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-full cursor-pointer hover:bg-gray-100 peer-checked:bg-blue-600 peer-checked:text-white peer-checked:border-transparent transition-colors duration-200">NO CUMPLE</span>
-                    </label>
-                    <label class="radio-label">
-                        <input type="radio" name="q1_2" value="NO APLICA" class="peer hidden">
-                        <span class="inline-flex items-center justify-center px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-full cursor-pointer hover:bg-gray-100 peer-checked:bg-blue-600 peer-checked:text-white peer-checked:border-transparent transition-colors duration-200">NO APLICA</span>
-                    </label>
-                </div>
-                <div class="observation-container hidden mt-4 space-y-2">
-                    <label class="block text-sm font-medium text-gray-700">Observaciones</label>
-                    <textarea class="observations-textarea w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"></textarea>
-                    
-                    <div class="flex flex-col md:flex-row gap-4">
-                        <div class="flex-1">
-                            <button class="upload-btn-1 w-full py-2 px-4 rounded-lg text-sm font-medium text-white bg-green-600 hover:bg-green-700 transition-colors duration-200">Cargar Foto 1</button>
-                            <input type="file" accept="image/*" class="photo-upload-1 hidden">
-                            <div class="photo-preview-1 mt-2"></div>
-                        </div>
-                        <div class="flex-1">
-                            <button class="upload-btn-2 w-full py-2 px-4 rounded-lg text-sm font-medium text-white bg-green-600 hover:bg-green-700 transition-colors duration-200">Cargar Foto 2</button>
-                            <input type="file" accept="image/*" class="photo-upload-2 hidden">
-                            <div class="photo-preview-2 mt-2"></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="question-block bg-gray-50 rounded-lg p-4 shadow-sm border border-gray-200" data-question-id="q1_3">
-                <p class="font-medium text-gray-800 mb-2">1.3 El suelo está libre de objetos que deberían estar guardados.</p>
-                <div class="flex flex-wrap gap-2 mb-4">
-                    <label class="radio-label">
-                        <input type="radio" name="q1_3" value="CUMPLE" class="peer hidden">
-                        <span class="inline-flex items-center justify-center px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-full cursor-pointer hover:bg-gray-100 peer-checked:bg-blue-600 peer-checked:text-white peer-checked:border-transparent transition-colors duration-200">CUMPLE</span>
-                    </label>
-                    <label class="radio-label">
-                        <input type="radio" name="q1_3" value="CUMPLE PARCIAL" class="peer hidden">
-                        <span class="inline-flex items-center justify-center px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-full cursor-pointer hover:bg-gray-100 peer-checked:bg-blue-600 peer-checked:text-white peer-checked:border-transparent transition-colors duration-200">CUMPLE PARCIAL</span>
-                    </label>
-                    <label class="radio-label">
-                        <input type="radio" name="q1_3" value="NO CUMPLE" class="peer hidden">
-                        <span class="inline-flex items-center justify-center px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-full cursor-pointer hover:bg-gray-100 peer-checked:bg-blue-600 peer-checked:text-white peer-checked:border-transparent transition-colors duration-200">NO CUMPLE</span>
-                    </label>
-                    <label class="radio-label">
-                        <input type="radio" name="q1_3" value="NO APLICA" class="peer hidden">
-                        <span class="inline-flex items-center justify-center px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-full cursor-pointer hover:bg-gray-100 peer-checked:bg-blue-600 peer-checked:text-white peer-checked:border-transparent transition-colors duration-200">NO APLICA</span>
-                    </label>
-                </div>
-                <div class="observation-container hidden mt-4 space-y-2">
-                    <label class="block text-sm font-medium text-gray-700">Observaciones</label>
-                    <textarea class="observations-textarea w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"></textarea>
-                    
-                    <div class="flex flex-col md:flex-row gap-4">
-                        <div class="flex-1">
-                            <button class="upload-btn-1 w-full py-2 px-4 rounded-lg text-sm font-medium text-white bg-green-600 hover:bg-green-700 transition-colors duration-200">Cargar Foto 1</button>
-                            <input type="file" accept="image/*" class="photo-upload-1 hidden">
-                            <div class="photo-preview-1 mt-2"></div>
-                        </div>
-                        <div class="flex-1">
-                            <button class="upload-btn-2 w-full py-2 px-4 rounded-lg text-sm font-medium text-white bg-green-600 hover:bg-green-700 transition-colors duration-200">Cargar Foto 2</button>
-                            <input type="file" accept="image/*" class="photo-upload-2 hidden">
-                            <div class="photo-preview-2 mt-2"></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="question-block bg-gray-50 rounded-lg p-4 shadow-sm border border-gray-200" data-question-id="q1_4">
-                <p class="font-medium text-gray-800 mb-2">1.4 Las partes superiores e internas de todos los armarios, estantes, mesas, etc., están libres de objetos no deseados.</p>
-                <div class="flex flex-wrap gap-2 mb-4">
-                    <label class="radio-label">
-                        <input type="radio" name="q1_4" value="CUMPLE" class="peer hidden">
-                        <span class="inline-flex items-center justify-center px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-full cursor-pointer hover:bg-gray-100 peer-checked:bg-blue-600 peer-checked:text-white peer-checked:border-transparent transition-colors duration-200">CUMPLE</span>
-                    </label>
-                    <label class="radio-label">
-                        <input type="radio" name="q1_4" value="CUMPLE PARCIAL" class="peer hidden">
-                        <span class="inline-flex items-center justify-center px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-full cursor-pointer hover:bg-gray-100 peer-checked:bg-blue-600 peer-checked:text-white peer-checked:border-transparent transition-colors duration-200">CUMPLE PARCIAL</span>
-                    </label>
-                    <label class="radio-label">
-                        <input type="radio" name="q1_4" value="NO CUMPLE" class="peer hidden">
-                        <span class="inline-flex items-center justify-center px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-full cursor-pointer hover:bg-gray-100 peer-checked:bg-blue-600 peer-checked:text-white peer-checked:border-transparent transition-colors duration-200">NO CUMPLE</span>
-                    </label>
-                    <label class="radio-label">
-                        <input type="radio" name="q1_4" value="NO APLICA" class="peer hidden">
-                        <span class="inline-flex items-center justify-center px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-full cursor-pointer hover:bg-gray-100 peer-checked:bg-blue-600 peer-checked:text-white peer-checked:border-transparent transition-colors duration-200">NO APLICA</span>
-                    </label>
-                </div>
-                <div class="observation-container hidden mt-4 space-y-2">
-                    <label class="block text-sm font-medium text-gray-700">Observaciones</label>
-                    <textarea class="observations-textarea w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"></textarea>
-                    
-                    <div class="flex flex-col md:flex-row gap-4">
-                        <div class="flex-1">
-                            <button class="upload-btn-1 w-full py-2 px-4 rounded-lg text-sm font-medium text-white bg-green-600 hover:bg-green-700 transition-colors duration-200">Cargar Foto 1</button>
-                            <input type="file" accept="image/*" class="photo-upload-1 hidden">
-                            <div class="photo-preview-1 mt-2"></div>
-                        </div>
-                        <div class="flex-1">
-                            <button class="upload-btn-2 w-full py-2 px-4 rounded-lg text-sm font-medium text-white bg-green-600 hover:bg-green-700 transition-colors duration-200">Cargar Foto 2</button>
-                            <input type="file" accept="image/*" class="photo-upload-2 hidden">
-                            <div class="photo-preview-2 mt-2"></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="question-block bg-gray-50 rounded-lg p-4 shadow-sm border border-gray-200" data-question-id="q1_5">
-                <p class="font-medium text-gray-800 mb-2">1.5 Hay una apariencia general libre de desorden en el área.</p>
-                <div class="flex flex-wrap gap-2 mb-4">
-                    <label class="radio-label">
-                        <input type="radio" name="q1_5" value="CUMPLE" class="peer hidden">
-                        <span class="inline-flex items-center justify-center px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-full cursor-pointer hover:bg-gray-100 peer-checked:bg-blue-600 peer-checked:text-white peer-checked:border-transparent transition-colors duration-200">CUMPLE</span>
-                    </label>
-                    <label class="radio-label">
-                        <input type="radio" name="q1_5" value="CUMPLE PARCIAL" class="peer hidden">
-                        <span class="inline-flex items-center justify-center px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-full cursor-pointer hover:bg-gray-100 peer-checked:bg-blue-600 peer-checked:text-white peer-checked:border-transparent transition-colors duration-200">CUMPLE PARCIAL</span>
-                    </label>
-                    <label class="radio-label">
-                        <input type="radio" name="q1_5" value="NO CUMPLE" class="peer hidden">
-                        <span class="inline-flex items-center justify-center px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-full cursor-pointer hover:bg-gray-100 peer-checked:bg-blue-600 peer-checked:text-white peer-checked:border-transparent transition-colors duration-200">NO CUMPLE</span>
-                    </label>
-                    <label class="radio-label">
-                        <input type="radio" name="q1_5" value="NO APLICA" class="peer hidden">
-                        <span class="inline-flex items-center justify-center px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-full cursor-pointer hover:bg-gray-100 peer-checked:bg-blue-600 peer-checked:text-white peer-checked:border-transparent transition-colors duration-200">NO APLICA</span>
-                    </label>
-                </div>
-                <div class="observation-container hidden mt-4 space-y-2">
-                    <label class="block text-sm font-medium text-gray-700">Observaciones</label>
-                    <textarea class="observations-textarea w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"></textarea>
-                    
-                    <div class="flex flex-col md:flex-row gap-4">
-                        <div class="flex-1">
-                            <button class="upload-btn-1 w-full py-2 px-4 rounded-lg text-sm font-medium text-white bg-green-600 hover:bg-green-700 transition-colors duration-200">Cargar Foto 1</button>
-                            <input type="file" accept="image/*" class="photo-upload-1 hidden">
-                            <div class="photo-preview-1 mt-2"></div>
-                        </div>
-                        <div class="flex-1">
-                            <button class="upload-btn-2 w-full py-2 px-4 rounded-lg text-sm font-medium text-white bg-green-600 hover:bg-green-700 transition-colors duration-200">Cargar Foto 2</button>
-                            <input type="file" accept="image/*" class="photo-upload-2 hidden">
-                            <div class="photo-preview-2 mt-2"></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
-        </div>
-        
-        <!-- Controles de Navegación -->
-        <div class="flex justify-between w-full mt-8">
-            <button id="prevPageBtn" class="px-6 py-2 rounded-lg text-lg font-medium text-gray-700 bg-gray-200 hover:bg-gray-300 transition-colors duration-200" disabled>Anterior</button>
-            <button id="nextPageBtn" class="px-6 py-2 rounded-lg text-lg font-medium text-white bg-blue-600 hover:bg-blue-700 transition-colors duration-200">Siguiente</button>
-            <button id="finishBtn" class="hidden px-6 py-2 rounded-lg text-lg font-medium text-white bg-green-600 hover:bg-green-700 transition-colors duration-200">Ver Resultado</button>
-        </div>
 
-        <!-- Modal de Mensaje -->
-        <div id="messageModal" class="fixed inset-0 bg-gray-900 bg-opacity-75 flex items-center justify-center hidden z-50">
-            <div class="bg-white rounded-xl shadow-2xl p-6 md:p-8 max-w-sm w-full text-center">
-                <h3 id="modalTitle" class="text-xl font-bold mb-4"></h3>
-                <p id="modalMessage" class="text-gray-700 mb-6"></p>
-                <button id="closeModalBtn" class="w-full py-2 px-4 rounded-lg text-lg font-medium text-white bg-blue-600 hover:bg-blue-700 transition duration-200">Cerrar</button>
+            <!-- Contenedor de Preguntas, se llenará dinámicamente -->
+            <div id="questionsContainer" class="w-full space-y-8"></div>
+            
+            <!-- Controles de Navegación -->
+            <div class="flex justify-between w-full mt-8">
+                <button id="prevPageBtn" class="px-6 py-2 rounded-lg text-lg font-medium text-gray-700 bg-gray-200 hover:bg-gray-300 transition-colors duration-200" disabled>Anterior</button>
+                <button id="nextPageBtn" class="px-6 py-2 rounded-lg text-lg font-medium text-white bg-blue-600 hover:bg-blue-700 transition-colors duration-200">Siguiente</button>
+                <button id="finishBtn" class="hidden px-6 py-2 rounded-lg text-lg font-medium text-white bg-green-600 hover:bg-green-700 transition-colors duration-200">Ver Resultado</button>
             </div>
         </div>
-
     </div>
 
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
         import { getAuth, signInWithCustomToken, signInAnonymously } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
-        import { getFirestore, doc, onSnapshot, setDoc, setLogLevel } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+        import { getFirestore, doc, onSnapshot, setDoc, setLogLevel, collection, getDocs, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
         // Firebase-related variables
         const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
@@ -272,10 +92,17 @@
         let db;
         let auth;
         let userId = null;
+        let currentAuditId = null;
 
         // UI elements
+        const auditSelectionScreen = document.getElementById('auditSelectionScreen');
+        const auditFormScreen = document.getElementById('auditFormScreen');
+        const areaSelect = document.getElementById('areaSelect');
+        const pastAuditsList = document.getElementById('pastAuditsList');
+        const newAuditBtn = document.getElementById('newAuditBtn');
         const pageNumberDisplay = document.getElementById('pageNumber');
         const pageScoreDisplay = document.getElementById('pageScore');
+        const questionsContainer = document.getElementById('questionsContainer');
         const nextPageBtn = document.getElementById('nextPageBtn');
         const prevPageBtn = document.getElementById('prevPageBtn');
         const finishBtn = document.getElementById('finishBtn');
@@ -283,13 +110,82 @@
         const modalTitle = document.getElementById('modalTitle');
         const modalMessage = document.getElementById('modalMessage');
         const closeModalBtn = document.getElementById('closeModalBtn');
-        const pages = document.querySelectorAll('.page');
+        
         let currentPage = 0;
-
-        // Data structure to hold responses
         let responses = {};
+        let auditData = {};
 
-        // Mapping from question names to scores
+        // Hard-coded data from the CSV file
+        const evaluationData = {
+            title: 'AUTOEVALUACIÓN 5S',
+            areas: [
+                {
+                    name: 'Grupo 1 - Elaboracion',
+                    description: 'Laboratorio de líquidos, Sala de Macerados, Sala de mezclas, Sala de Casamiento, Sala de osmosis, Recepcion de materia prima, Depósito de secos (Azucar, hierbas), Cámara de escencias Planta tratamiento de efluentes.'
+                },
+                {
+                    name: 'Grupo 2 - Fraccionamiento',
+                    description: 'L2, L4, L5 (Producción), oficina de producción, sala capri, cocina, pecera y pasillo de entrada'
+                },
+                {
+                    name: 'Grupo 3 - Almacenes',
+                    description: 'Depósitos :F1 F2 G1 E1 A47, Final de Linea, Sala de Etiquetas.'
+                }
+            ],
+            pages: [
+                {
+                    subtitle: '1°S - Classificación | Seiri | Separar lo útil de lo inútil y descartar lo que no se utilice más.',
+                    questions: [
+                        'No hay equipo, archivo físico, mueble o utensilio sin uso en el área.',
+                        'Los materiales y equipos de uso frecuente están disponibles y son de fácil acceso.',
+                        'El suelo está libre de objetos que deberían estar guardados.',
+                        'Las partes superiores e internas de todos los armarios, estantes, mesas, etc., están libres de objetos no deseados.',
+                        'Hay una apariencia general libre de desorden en el área.'
+                    ]
+                },
+                {
+                    subtitle: '2°S - Organização | Seiton | Un lugar para cada cosa y cada cosa en su lugar.',
+                    questions: [
+                        'Todos los materiales e instrumentos están almacenados en la ubicación correcta y están correctamente etiquetados y señalizados.',
+                        'Los materiales, equipos y herramientas están ordenados para un fácil uso y acceso.',
+                        'Las estanterías y armarios están correctamente etiquetados, indicando qué se debe almacenar allí.',
+                        'Las puertas y los pasillos están libres de obstrucciones.',
+                        'Las cintas o señalizaciones de suelo se utilizan correctamente en la organización de los materiales.'
+                    ]
+                },
+                {
+                    subtitle: '3°S - Limpeza | Seiso | Mantener el área de trabajo limpia y ordenada.',
+                    questions: [
+                        'El área de trabajo está limpia y libre de suciedad.',
+                        'Las máquinas y los equipos están libres de suciedad.',
+                        'Los botes de basura están limpios y en su lugar.',
+                        'Las herramientas y los equipos de limpieza se almacenan en un lugar específico y están disponibles.',
+                        'El área está libre de polvo, basura y derrames.'
+                    ]
+                },
+                {
+                    subtitle: '4°S - Higiene e Padronização | Seiketsu | Estandarizar y mantener.',
+                    questions: [
+                        'El plan de limpieza y organización está visible y se sigue.',
+                        'Las listas de verificación de limpieza y mantenimiento están al día.',
+                        'Los procedimientos de seguridad y las pautas están disponibles y se respetan.',
+                        'Los empleados usan el equipo de protección personal (EPP) adecuado.',
+                        'Los estándares de las 5S se comunican y son conocidos por todos los miembros del equipo.'
+                    ]
+                },
+                {
+                    subtitle: '5°S - Disciplina e Autogestão | Shitsuke | Fomentar la autodisciplina.',
+                    questions: [
+                        'Todos los miembros del equipo están comprometidos con el mantenimiento de las 5S.',
+                        'Se realizan auditorías internas y se toman medidas correctivas.',
+                        'Las mejoras se discuten y se implementan regularmente.',
+                        'Se reconoce y recompensa el buen desempeño en las 5S.',
+                        'Los empleados se sienten dueños del programa 5S.'
+                    ]
+                }
+            ]
+        };
+
         const scoreMapping = {
             'CUMPLE': 20,
             'CUMPLE PARCIAL': 10,
@@ -309,39 +205,97 @@
                 } else {
                     await signInAnonymously(auth);
                 }
-
                 userId = auth.currentUser.uid;
-                // Initial fetch of data and setup of listeners
-                setupRealtimeListener();
-
+                loadAreasAndAudits();
             } catch (error) {
-                console.error("Error al inicializar Firebase o al autenticar:", error);
+                console.error("Error al inicializar Firebase:", error);
                 showMessageModal('Error', `Error al inicializar la aplicación. Por favor, recargue la página. Detalles: ${error.message}`);
             }
         };
 
+        // Load areas and past audits for the selection screen
+        const loadAreasAndAudits = async () => {
+            // Populate area select dropdown
+            evaluationData.areas.forEach(area => {
+                const option = document.createElement('option');
+                option.value = area.name;
+                option.textContent = area.name;
+                areaSelect.appendChild(option);
+            });
+
+            // Load past audits from Firestore
+            const auditsCollection = collection(db, `audits`);
+            const auditDocs = await getDocs(auditsCollection);
+            pastAuditsList.innerHTML = '';
+            auditDocs.forEach(doc => {
+                const audit = doc.data();
+                const auditId = doc.id;
+                const date = audit.timestamp ? new Date(audit.timestamp.seconds * 1000).toLocaleString() : 'Fecha no disponible';
+                const listItem = document.createElement('li');
+                listItem.className = 'bg-gray-100 p-3 rounded-lg flex justify-between items-center cursor-pointer hover:bg-gray-200 transition-colors duration-200';
+                listItem.innerHTML = `<span>${audit.area} - ${date}</span><span class="text-xs text-gray-500">ID: ${auditId}</span>`;
+                listItem.addEventListener('click', () => startAudit(auditId));
+                pastAuditsList.appendChild(listItem);
+            });
+        };
+
+        // Start a new audit
+        newAuditBtn.addEventListener('click', async () => {
+            const selectedArea = areaSelect.value;
+            if (!selectedArea) {
+                showMessageModal('Atención', 'Por favor, selecciona un área para iniciar una nueva auditoría.');
+                return;
+            }
+
+            const auditsCollection = collection(db, `audits`);
+            const newDocRef = await addDoc(auditsCollection, {
+                area: selectedArea,
+                timestamp: serverTimestamp(),
+                userId: userId,
+                responses: {}
+            });
+            startAudit(newDocRef.id);
+        });
+
+        // Start an existing or new audit
+        const startAudit = (auditId) => {
+            currentAuditId = auditId;
+            auditSelectionScreen.classList.add('hidden');
+            auditFormScreen.classList.remove('hidden');
+            setupRealtimeListener(currentAuditId);
+        };
+
         // Setup real-time listener for responses
-        const setupRealtimeListener = () => {
-            const userDocRef = doc(db, `artifacts/${appId}/users/${userId}/evaluation/responses`);
-            onSnapshot(userDocRef, (docSnap) => {
+        const setupRealtimeListener = (auditId) => {
+            const auditDocRef = doc(db, `audits/${auditId}`);
+            onSnapshot(auditDocRef, (docSnap) => {
                 if (docSnap.exists()) {
-                    responses = docSnap.data().responses || {};
+                    auditData = docSnap.data();
+                    responses = auditData.responses || {};
                 } else {
                     responses = {};
+                    auditData = {};
                 }
                 updateUI();
             }, (error) => {
                 console.error("Error al escuchar los datos:", error);
-                showMessageModal('Error', 'Error al cargar los datos de la autoevaluación en tiempo real.');
+                if (error.code === 'permission-denied' || error.message.includes('insufficient permissions')) {
+                    console.error("El error se debe a permisos insuficientes. Por favor, revisa tus reglas de seguridad de Firestore.");
+                }
+                showMessageModal('Error', 'Error al cargar los datos de la autoevaluación en tiempo real. Por favor, revisa tus permisos de Firestore.');
             });
         };
 
         // Function to save responses to Firestore
         const saveResponses = async () => {
-            if (!userId) return;
-            const userDocRef = doc(db, `artifacts/${appId}/users/${userId}/evaluation/responses`);
+            if (!currentAuditId) {
+                console.error("No se pudo guardar la respuesta: el ID de la auditoría no está disponible.");
+                return;
+            }
+            const auditDocRef = doc(db, `audits/${currentAuditId}`);
             try {
-                await setDoc(userDocRef, { responses }, { merge: true });
+                await setDoc(auditDocRef, { responses: responses }, { merge: true });
+                console.log("Respuestas guardadas exitosamente.");
             } catch (error) {
                 console.error("Error al guardar las respuestas:", error);
                 showMessageModal('Error', `No se pudieron guardar las respuestas. Detalles: ${error.message}`);
@@ -350,74 +304,168 @@
 
         // Function to update the UI based on the current state
         const updateUI = () => {
-            // Hide all pages
-            pages.forEach((page, index) => {
-                page.style.display = index === currentPage ? 'block' : 'none';
+            questionsContainer.innerHTML = '';
+            
+            // Render current page
+            const currentPageData = evaluationData.pages[currentPage];
+            if (!currentPageData) {
+                console.error("Datos de página no encontrados.");
+                return;
+            }
+
+            const pageTitle = document.createElement('h2');
+            pageTitle.className = "text-2xl font-semibold text-gray-700";
+            pageTitle.textContent = currentPageData.subtitle;
+            questionsContainer.appendChild(pageTitle);
+
+            // Render questions for the current page
+            currentPageData.questions.forEach((questionText, qIndex) => {
+                const questionId = `q${currentPage + 1}_${qIndex + 1}`;
+                const savedResponse = responses[questionId];
+
+                const questionBlock = document.createElement('div');
+                questionBlock.className = 'question-block bg-gray-50 rounded-lg p-4 shadow-sm border border-gray-200';
+                questionBlock.dataset.questionId = questionId;
+
+                const questionP = document.createElement('p');
+                questionP.className = 'font-medium text-gray-800 mb-2';
+                questionP.textContent = `${currentPage + 1}.${qIndex + 1} ${questionText}`;
+                questionBlock.appendChild(questionP);
+
+                const optionsDiv = document.createElement('div');
+                optionsDiv.className = 'flex flex-wrap gap-2 mb-4';
+                ['CUMPLE', 'CUMPLE PARCIAL', 'NO CUMPLE', 'NO APLICA'].forEach(option => {
+                    const label = document.createElement('label');
+                    label.className = 'radio-label';
+                    label.innerHTML = `
+                        <input type="radio" name="${questionId}" value="${option}" class="peer hidden" ${savedResponse && savedResponse.answer === option ? 'checked' : ''}>
+                        <span class="inline-flex items-center justify-center px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-full cursor-pointer hover:bg-gray-100 peer-checked:bg-blue-600 peer-checked:text-white peer-checked:border-transparent transition-colors duration-200">${option}</span>
+                    `;
+                    optionsDiv.appendChild(label);
+                });
+                questionBlock.appendChild(optionsDiv);
+
+                const observationContainer = document.createElement('div');
+                observationContainer.className = `observation-container mt-4 space-y-2 ${savedResponse && (savedResponse.answer === 'NO CUMPLE' || savedResponse.answer === 'CUMPLE PARCIAL') ? '' : 'hidden'}`;
+                observationContainer.innerHTML = `
+                    <label class="block text-sm font-medium text-gray-700">Observaciones</label>
+                    <textarea class="observations-textarea w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">${savedResponse?.observations || ''}</textarea>
+                    <div class="flex flex-col md:flex-row gap-4">
+                        <div class="flex-1">
+                            <button class="upload-btn-1 w-full py-2 px-4 rounded-lg text-sm font-medium text-white bg-green-600 hover:bg-green-700 transition-colors duration-200">Cargar Foto 1</button>
+                            <input type="file" accept="image/*" class="photo-upload-1 hidden">
+                            <div class="photo-preview-1 mt-2">${savedResponse?.photoUrl1 ? `<img src="${savedResponse.photoUrl1}" alt="Foto 1 de la auditoría" class="w-24 h-24 object-cover">` : ''}</div>
+                        </div>
+                        <div class="flex-1">
+                            <button class="upload-btn-2 w-full py-2 px-4 rounded-lg text-sm font-medium text-white bg-green-600 hover:bg-green-700 transition-colors duration-200">Cargar Foto 2</button>
+                            <input type="file" accept="image/*" class="photo-upload-2 hidden">
+                            <div class="photo-preview-2 mt-2">${savedResponse?.photoUrl2 ? `<img src="${savedResponse.photoUrl2}" alt="Foto 2 de la auditoría" class="w-24 h-24 object-cover">` : ''}</div>
+                        </div>
+                    </div>
+                `;
+                questionBlock.appendChild(observationContainer);
+                questionsContainer.appendChild(questionBlock);
             });
+            
+            // Re-attach event listeners to dynamically created elements
+            attachEventListeners();
             
             // Update page number display
             pageNumberDisplay.textContent = `Página ${currentPage + 1}`;
             
             // Update navigation buttons
             prevPageBtn.disabled = currentPage === 0;
-            nextPageBtn.style.display = currentPage < pages.length - 1 ? 'block' : 'none';
-            finishBtn.style.display = currentPage === pages.length - 1 ? 'block' : 'none';
+            nextPageBtn.style.display = currentPage < evaluationData.pages.length - 1 ? 'block' : 'none';
+            finishBtn.style.display = currentPage === evaluationData.pages.length - 1 ? 'block' : 'none';
             
-            // Update question selection and calculate page score
+            // Calculate and display page score
             let pageScore = 0;
-            const questionBlocks = pages[currentPage].querySelectorAll('.question-block');
-            
+            const questionBlocks = document.querySelectorAll('#questionsContainer .question-block');
             questionBlocks.forEach(block => {
                 const questionId = block.dataset.questionId;
                 const savedResponse = responses[questionId];
-                const radioInputs = block.querySelectorAll('input[type="radio"]');
-                const observationContainer = block.querySelector('.observation-container');
-                const observationsTextarea = block.querySelector('.observations-textarea');
-                const photoPreview1 = block.querySelector('.photo-preview-1');
-                const photoPreview2 = block.querySelector('.photo-preview-2');
-
-                // Restore radio button selection
-                radioInputs.forEach(input => {
-                    input.checked = (savedResponse && input.value === savedResponse.answer);
-                });
-                
-                // Restore observations and photos
-                if (savedResponse && (savedResponse.answer === 'NO CUMPLE' || savedResponse.answer === 'CUMPLE PARCIAL' || savedResponse.answer === 'NO APLICA')) {
-                    observationContainer.classList.remove('hidden');
-                    observationsTextarea.value = savedResponse.observations || '';
-                    if (savedResponse.photoUrl1) {
-                        photoPreview1.innerHTML = `<img src="${savedResponse.photoUrl1}" alt="Foto 1 de la auditoría" class="w-24 h-24 object-cover">`;
-                    } else {
-                        photoPreview1.innerHTML = '';
-                    }
-                    if (savedResponse.photoUrl2) {
-                        photoPreview2.innerHTML = `<img src="${savedResponse.photoUrl2}" alt="Foto 2 de la auditoría" class="w-24 h-24 object-cover">`;
-                    } else {
-                        photoPreview2.innerHTML = '';
-                    }
-                } else {
-                    observationContainer.classList.add('hidden');
-                    observationsTextarea.value = '';
-                    photoPreview1.innerHTML = '';
-                    photoPreview2.innerHTML = '';
-                }
-
-                // Calculate page score
-                const selectedRadio = Array.from(radioInputs).find(input => input.checked);
-                if (selectedRadio) {
-                    const score = scoreMapping[selectedRadio.value] || 0;
-                    pageScore += score;
+                if (savedResponse && savedResponse.answer) {
+                    pageScore += scoreMapping[savedResponse.answer] || 0;
                 }
             });
             pageScoreDisplay.textContent = pageScore;
         };
+        
+        const attachEventListeners = () => {
+            // Radio button listeners
+            document.querySelectorAll('input[type="radio"]').forEach(radio => {
+                radio.addEventListener('change', (event) => {
+                    const questionBlock = event.target.closest('.question-block');
+                    const questionId = questionBlock.dataset.questionId;
+                    const value = event.target.value;
+                    const observationContainer = questionBlock.querySelector('.observation-container');
+                    
+                    if (value === 'NO CUMPLE' || value === 'CUMPLE PARCIAL') {
+                        observationContainer.classList.remove('hidden');
+                    } else {
+                        observationContainer.classList.add('hidden');
+                    }
+                    
+                    if (!responses[questionId]) responses[questionId] = {};
+                    responses[questionId].answer = value;
+                    if (value === 'CUMPLE' || value === 'NO APLICA') {
+                        delete responses[questionId].observations;
+                        delete responses[questionId].photoUrl1;
+                        delete responses[questionId].photoUrl2;
+                    }
+                    saveResponses();
+                    updateUI();
+                });
+            });
+
+            // Textarea listeners
+            document.querySelectorAll('.observations-textarea').forEach(textarea => {
+                textarea.addEventListener('input', (event) => {
+                    const questionId = event.target.closest('.question-block').dataset.questionId;
+                    if (!responses[questionId]) responses[questionId] = {};
+                    responses[questionId].observations = event.target.value;
+                    saveResponses();
+                });
+            });
+
+            // Photo upload listeners
+            const handlePhotoUpload = (e, index) => {
+                const questionBlock = e.target.closest('.question-block');
+                const questionId = questionBlock.dataset.questionId;
+                const file = e.target.files[0];
+                const photoPreview = questionBlock.querySelector(`.photo-preview-${index}`);
+                
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = (e) => {
+                        const base64Image = e.target.result;
+                        photoPreview.innerHTML = `<img src="${base64Image}" alt="Foto ${index} de la auditoría" class="w-24 h-24 object-cover">`;
+                        if (!responses[questionId]) responses[questionId] = {};
+                        if (index === 1) responses[questionId].photoUrl1 = base64Image;
+                        if (index === 2) responses[questionId].photoUrl2 = base64Image;
+                        saveResponses();
+                    };
+                    reader.readAsDataURL(file);
+                } else {
+                    photoPreview.innerHTML = '';
+                    if (responses[questionId]) {
+                        if (index === 1) delete responses[questionId].photoUrl1;
+                        if (index === 2) delete responses[questionId].photoUrl2;
+                        saveResponses();
+                    }
+                }
+            };
+            document.querySelectorAll('.upload-btn-1').forEach(btn => btn.addEventListener('click', () => btn.closest('.question-block').querySelector('.photo-upload-1').click()));
+            document.querySelectorAll('.upload-btn-2').forEach(btn => btn.addEventListener('click', () => btn.closest('.question-block').querySelector('.photo-upload-2').click()));
+            document.querySelectorAll('.photo-upload-1').forEach(input => input.addEventListener('change', (e) => handlePhotoUpload(e, 1)));
+            document.querySelectorAll('.photo-upload-2').forEach(input => input.addEventListener('change', (e) => handlePhotoUpload(e, 2)));
+        };
 
         // Handle navigation
         nextPageBtn.addEventListener('click', () => {
-            if (currentPage < pages.length - 1) {
+            if (currentPage < evaluationData.pages.length - 1) {
                 currentPage++;
                 updateUI();
-                saveResponses();
             }
         });
 
@@ -425,150 +473,13 @@
             if (currentPage > 0) {
                 currentPage--;
                 updateUI();
-                saveResponses();
             }
         });
 
-        // Handle radio button changes
-        document.querySelectorAll('input[type="radio"]').forEach(radio => {
-            radio.addEventListener('change', (event) => {
-                const questionBlock = event.target.closest('.question-block');
-                const questionId = questionBlock.dataset.questionId;
-                const value = event.target.value;
-                const observationsTextarea = questionBlock.querySelector('.observations-textarea');
-                const observationContainer = questionBlock.querySelector('.observation-container');
-                const photoInput1 = questionBlock.querySelector('.photo-upload-1');
-                const photoInput2 = questionBlock.querySelector('.photo-upload-2');
-
-                // Show/hide observation container
-                if (value === 'NO CUMPLE' || value === 'CUMPLE PARCIAL') {
-                    observationContainer.classList.remove('hidden');
-                } else {
-                    observationContainer.classList.add('hidden');
-                }
-
-                // Store response
-                if (!responses[questionId]) {
-                    responses[questionId] = {};
-                }
-                responses[questionId].answer = value;
-
-                // Clear observations and photos if not applicable
-                if (value === 'CUMPLE' || value === 'NO APLICA') {
-                    delete responses[questionId].observations;
-                    delete responses[questionId].photoUrl1;
-                    delete responses[questionId].photoUrl2;
-                    observationsTextarea.value = '';
-                    photoInput1.value = '';
-                    photoInput2.value = '';
-                    questionBlock.querySelector('.photo-preview-1').innerHTML = '';
-                    questionBlock.querySelector('.photo-preview-2').innerHTML = '';
-                }
-
-                saveResponses();
-                updateUI();
-            });
-        });
-
-        // Handle observation text changes
-        document.querySelectorAll('.observations-textarea').forEach(textarea => {
-            textarea.addEventListener('input', (event) => {
-                const questionId = event.target.closest('.question-block').dataset.questionId;
-                if (!responses[questionId]) {
-                    responses[questionId] = {};
-                }
-                responses[questionId].observations = event.target.value;
-                saveResponses();
-            });
-        });
-        
-        // Handle photo upload button 1 click
-        document.querySelectorAll('.upload-btn-1').forEach(button => {
-            button.addEventListener('click', () => {
-                const questionBlock = button.closest('.question-block');
-                const photoInput = questionBlock.querySelector('.photo-upload-1');
-                photoInput.click();
-            });
-        });
-
-        // Handle photo file 1 selection
-        document.querySelectorAll('.photo-upload-1').forEach(input => {
-            input.addEventListener('change', (event) => {
-                const questionBlock = event.target.closest('.question-block');
-                const questionId = questionBlock.dataset.questionId;
-                const file = event.target.files[0];
-                const photoPreview = questionBlock.querySelector('.photo-preview-1');
-
-                if (file) {
-                    const reader = new FileReader();
-                    reader.onload = (e) => {
-                        const base64Image = e.target.result;
-                        photoPreview.innerHTML = `<img src="${base64Image}" alt="Foto 1 de la auditoría" class="w-24 h-24 object-cover">`;
-                        
-                        if (!responses[questionId]) {
-                            responses[questionId] = {};
-                        }
-                        responses[questionId].photoUrl1 = base64Image;
-                        saveResponses();
-                    };
-                    reader.readAsDataURL(file);
-                } else {
-                    photoPreview.innerHTML = '';
-                    if (responses[questionId]) {
-                         delete responses[questionId].photoUrl1;
-                         saveResponses();
-                    }
-                }
-            });
-        });
-
-        // Handle photo upload button 2 click
-        document.querySelectorAll('.upload-btn-2').forEach(button => {
-            button.addEventListener('click', () => {
-                const questionBlock = button.closest('.question-block');
-                const photoInput = questionBlock.querySelector('.photo-upload-2');
-                photoInput.click();
-            });
-        });
-
-        // Handle photo file 2 selection
-        document.querySelectorAll('.photo-upload-2').forEach(input => {
-            input.addEventListener('change', (event) => {
-                const questionBlock = event.target.closest('.question-block');
-                const questionId = questionBlock.dataset.questionId;
-                const file = event.target.files[0];
-                const photoPreview = questionBlock.querySelector('.photo-preview-2');
-
-                if (file) {
-                    const reader = new FileReader();
-                    reader.onload = (e) => {
-                        const base64Image = e.target.result;
-                        photoPreview.innerHTML = `<img src="${base64Image}" alt="Foto 2 de la auditoría" class="w-24 h-24 object-cover">`;
-                        
-                        if (!responses[questionId]) {
-                            responses[questionId] = {};
-                        }
-                        responses[questionId].photoUrl2 = base64Image;
-                        saveResponses();
-                    };
-                    reader.readAsDataURL(file);
-                } else {
-                    photoPreview.innerHTML = '';
-                    if (responses[questionId]) {
-                         delete responses[questionId].photoUrl2;
-                         saveResponses();
-                    }
-                }
-            });
-        });
-
-
-        // Handle finish button
         finishBtn.addEventListener('click', () => {
             let totalScore = 0;
             let totalQuestions = 0;
             
-            // Calculate total score from all responses
             for (const question in responses) {
                 if (responses.hasOwnProperty(question)) {
                     const score = scoreMapping[responses[question].answer] || 0;
@@ -593,7 +504,6 @@
             messageModal.classList.add('hidden');
         });
 
-        // Start the application
         window.onload = initializeFirebase;
     </script>
 </body>
